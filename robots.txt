@@ -2,7 +2,7 @@
 Sitemap: http://new-fashion.co.uk/sitemap/sitemap.xml
 
 # Crawlers Setup
-
+#
 # Directories
 User-agent: *
 Disallow: /404/
