@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Newfashion_Morefrom>
+            <version>0.0.1</version>
+        </Newfashion_Morefrom>
+    </modules>
+	<frontend>
+		<routers>
+			<newfashion>
+				<use>standard</use>
+				<args>
+					<module>Newfashion_Morefrom</module>
+					<frontName>newfashion</frontName>
+				</args>
+			</newfashion>
+		</routers>   
+	</frontend>
+    <global>
+        <blocks>
+            <newfashion_morefrom>
+                <class>Newfashion_Morefrom_Block</class>
+            </newfashion_morefrom>
+            <catalog>
+                <rewrite>
+                    <product_view>Newfashion_Morefrom_Block_Catalog_Product_View</product_view>
+                </rewrite>
+            </catalog>
+        </blocks>
+    </global>
+</config>
