@@ -218,7 +218,34 @@
 						<?php echo $this->getChildHtml('extra_buttons') ?>
 					<?php endif; ?>
 				</div>
-	
+	    <script type="text/javascript">
+      
+        $(function() {
+          
+		// Set size of div
+			$('.MagicThumb-expanded').css({
+				'width': 1000+ 'px',
+				'height': 1000 +'px'
+			});
+
+			// Do some calculations
+			$('.MagicThumb-expanded').mousemove(function(e) {
+				var mouseX = e.pageX - $(this).offset().left; 
+				var mouseY = e.pageY - $(this).offset().top; 
+
+                var posX = (Math.round((mouseX/1000)*100)/100) * (150);
+                var posY = (Math.round((mouseY/1000)*100)/100) * (150);
+				// var posX = (Math.round((mouseX/thumbnailWidth)*100)/100) * (fullWidth-thumbnailWidth);
+				//var posY = (Math.round((mouseY/thumbnailHeight)*100)/100) * (fullHeight-thumbnailHeight);
+
+
+				$('.MagicThumb-expanded img').css({
+					'left': -posX + 'px',
+					'top': -posY + 'px'
+				});
+			});
+        });
+    </script>
 				
 				<!-- DELIVERY BUTTON -->
 				<div id="delivery_button"><button type="button" id="pop" href="http://new-fashion.co.uk/extras/delivery.html" title="Delivery">DELIVERY</button></div>
