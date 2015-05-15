@@ -85,6 +85,7 @@
         $(function() {
           
 		// Set size of div
+		document.getElementsByClassName('MagicThumb-expanded');
 			$('.MagicThumb-expanded').css({
 				'width': 1000+ 'px',
 				'height': 1000 +'px'
@@ -101,7 +102,7 @@
 				//var posY = (Math.round((mouseY/thumbnailHeight)*100)/100) * (fullHeight-thumbnailHeight);
 
 
-				$('img').css({
+				$('.MagicThumb-expanded img').css({
 					'left': -posX + 'px',
 					'top': -posY + 'px'
 				});
