@@ -85,11 +85,12 @@
         $(function() {
           
 		// Set size of div
-		document.getElementsByClassName('MagicThumb-expanded');
-			$('MagicThumb-expanded').css({
-				'width': 1000+ 'px',
-				'height': 1000 +'px'
-			});
+		document.getElementsByClassName("MagicThumb-expanded").style["display"] = "none";
+		//document.getElementsByClassName('MagicThumb-expanded');
+		//	$('MagicThumb-expanded').css({
+		//		'width': 1000+ 'px',
+		//		'height': 1000 +'px'
+		//	});
 
 			// Do some calculations
 			$('.MagicThumb-expanded').mousemove(function(e) {
