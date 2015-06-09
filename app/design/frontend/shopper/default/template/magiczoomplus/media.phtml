@@ -47,6 +47,24 @@ if($main_image_file && $main_image_file != 'no_selection') {
     $thumb = $this->helper('catalog/image')->watermark(null, null)->resize($w, $h)->__toString();
 
     $main = $tool->getMainTemplate(compact('id', 'alt', 'label', 'title', 'description', 'shortDescription', 'img', 'thumb'));
+    $g_images = '';
+    $extra = '
+<div class="flexSlider newOne">
+<ul class="slides">';
+    foreach($this->getGalleryImages() as $g_image){
+        $g_image_path  = $g_image->getPath();
+        if(!file_exists($g_image_path)) continue;
+        $extra .='
+            <li>
+                <a class="MagicZoomPlus" href="'.$g_image->url .'">
+                    <img src="'.$g_image->url.'">
+                </a>
+            </li>
+        ';
+    }
+    $extra .='</ul>
+    </div>';
+    $main .= $extra;
 
 } else {
     $tool->params->setValue('enable-effect', 'No');

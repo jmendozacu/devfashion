@@ -2777,3 +2777,23 @@ width:100%;
 .anystretch img {
 	z-index: 0 !important;
 }
+
+
+
+/*** slider changes ***/
+
+.flexSlider.newOne {
+    border: 1px solid #aaaaaa;
+}
+    .flexSlider.newOne .MagicZoomPlus{
+        border:none;
+    }
+
+    .flexSlider.newOne .flex-direction-nav{
+        max-width: 100%;
+    }
+
+    .flexSlider.newOne .flex-direction-nav .flex-prev,
+    .flexSlider.newOne .flex-direction-nav .flex-next {
+        opacity: 1;
+    }

@@ -910,3 +910,15 @@ function getTweets(el, utils){
         });
     }
 }
+
+jQuery(document).ready(function () {
+   jQuery('.flexSlider').flexslider({
+       animation: 'slide',
+       smoothHeight: true,
+       slideshow: false,
+       touch: true,
+       directionNav:true,
+       keyboard: false,
+       controlNav: false
+   });
+})
