@@ -919,6 +919,18 @@ jQuery(document).ready(function () {
        touch: true,
        directionNav:true,
        keyboard: false,
-       controlNav: false
+       controlsContainer: '#forControlArrows',
+       controlNav: "thumbnails"
    });
+
+    jQuery('.swipeImage').on('touchstart', function() {
+        jQuery(this).fadeOut(400, function() {
+            jQuery(this).hide();
+        });
+    });
+
+    //jQuery('.swipeImage').tap(function() {
+    //    alert('pika');
+    //});
+
 })
