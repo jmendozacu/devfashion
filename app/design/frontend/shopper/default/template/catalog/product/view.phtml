@@ -465,3 +465,29 @@
 	}
 ?>
 </div>
+
+<div class="flexSlider2 newPopUp">
+    <div id="forControlArrows2"></div>
+    <ul class="slides">
+<?php
+
+$product_id = $this->getProduct()->getId();
+
+$product = Mage::getModel('catalog/product')->load($product_id);//product id here
+
+foreach ($product->getMediaGalleryImages() as $image) {
+    /**
+    * @ToDo
+    *
+    * change rel data from hardcoded to normal one
+    */
+    if(!file_exists($image->getPath())) continue;
+    ?>
+    <li data-thumb="<?php echo $image->getUrl()?>">
+        <a href="<?php echo $image->getUrl()?>" >
+            <img src="<?php echo $image->getUrl()?>">
+        </a>
+    </li>
+<?php } ?>
+    </ul>
+</div>
