@@ -910,3 +910,43 @@ function getTweets(el, utils){
         });
     }
 }
+
+jQuery(document).ready(function () {
+   jQuery('.flexSlider').flexslider({
+       animation: 'slide',
+       smoothHeight: true,
+       slideshow: false,
+       touch: true,
+       directionNav:true,
+       keyboard: false,
+       controlsContainer: '#forControlArrows',
+       controlNav: "thumbnails"
+   });
+
+    jQuery('.flexSlider2').flexslider({
+        animation: 'slide',
+        smoothHeight: true,
+        slideshow: false,
+        touch: true,
+        directionNav:true,
+        keyboard: false,
+        controlsContainer: '#forControlArrows2',
+        controlNav: "thumbnails"
+    });
+
+    jQuery('.swipeImage').on('touchstart', function() {
+        jQuery(this).fadeOut(400, function() {
+            jQuery(this).hide();
+        });
+    });
+
+    //jQuery('.swipeImage').tap(function() {
+    //    alert('pika');
+    //});
+
+    jQuery('a.MagicZoomPlus').on('click', function(){
+        jQuery(stOverlay).show();
+        console.log('pikachu');
+    })
+
+})

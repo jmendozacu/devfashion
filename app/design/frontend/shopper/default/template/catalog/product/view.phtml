@@ -129,6 +129,7 @@
             
 			<!-- added html by vasu -->
             <div class="v-slider">
+                <div class="swipeImage" style="background-image: url(<?php echo $this->getSkinUrl('images/swipe.png') ?>)"></div>
               <div id="owl-demo" class="owl-carousel" style="">
 				<?php
 	            	foreach($_product->getMediaGalleryImages() as $image){	
@@ -490,4 +491,30 @@
 		echo '<div class="after-tabs-block additional-block">'.$this->getLayout()->createBlock('cms/block')->setBlockId('shopper_after_tabs')->toHtml().'</div>';
 	}
 ?>
+</div>
+
+<div class="flexSlider2 newPopUp">
+    <div id="forControlArrows2"></div>
+    <ul class="slides">
+<?php
+
+$product_id = $this->getProduct()->getId();
+
+$product = Mage::getModel('catalog/product')->load($product_id);//product id here
+
+foreach ($product->getMediaGalleryImages() as $image) {
+    /**
+    * @ToDo
+    *
+    * change rel data from hardcoded to normal one
+    */
+    if(!file_exists($image->getPath())) continue;
+    ?>
+    <li data-thumb="<?php echo $image->getUrl()?>">
+        <a href="<?php echo $image->getUrl()?>" >
+            <img src="<?php echo $image->getUrl()?>">
+        </a>
+    </li>
+<?php } ?>
+    </ul>
 </div>
