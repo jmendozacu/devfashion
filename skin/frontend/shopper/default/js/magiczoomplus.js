@@ -5007,7 +5007,7 @@ var MagicZoomPlus = (function(g) {
             }
         },
         expand: function(w, q) {
-            //return
+            return
             if (this._o.disableExpand) {
                 return
             }

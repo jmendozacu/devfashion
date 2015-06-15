@@ -465,29 +465,47 @@
 	}
 ?>
 </div>
+<div class="greyBackground">
+    <div class="flexSlider2 newPopUp">
+        <div id="forControlArrows2"></div>
+        <ul class="slides">
+    <?php
 
-<div class="flexSlider2 newPopUp">
-    <div id="forControlArrows2"></div>
-    <ul class="slides">
-<?php
+    $product_id = $this->getProduct()->getId();
 
-$product_id = $this->getProduct()->getId();
+    $product = Mage::getModel('catalog/product')->load($product_id);//product id here
 
-$product = Mage::getModel('catalog/product')->load($product_id);//product id here
+    $imagesForSlider = $product->getMediaGalleryImages();
 
-foreach ($product->getMediaGalleryImages() as $image) {
-    /**
-    * @ToDo
-    *
-    * change rel data from hardcoded to normal one
-    */
-    if(!file_exists($image->getPath())) continue;
-    ?>
-    <li data-thumb="<?php echo $image->getUrl()?>">
-        <a href="<?php echo $image->getUrl()?>" >
-            <img src="<?php echo $image->getUrl()?>">
-        </a>
-    </li>
-<?php } ?>
-    </ul>
+    foreach ($imagesForSlider as $image) {
+        /**
+        * @ToDo
+        *
+        * change rel data from hardcoded to normal one
+        */
+        if(!file_exists($image->getPath())) continue;
+        ?>
+        <li>
+                <img src="<?php echo $image->getUrl()?>">
+        </li>
+    <?php } ?>
+        </ul>
+        <div class="popUpSliderNavigation">
+            <div id="openPopUpStrip"><a href="#">MORE IMAGES</a></div>
+            <div id="closePopUpStrip"><a href="#">x</a></div>
+            <ul>
+                <?php
+                foreach ($imagesForSlider as $image) {
+                    if(!file_exists($image->getPath())) continue;
+                    ?>
+                    <li>
+                        <div class="imageContainer" style="background-image: url(<?php echo $image->getUrl() ?>)"></div>
+                    </li>
+                <?php
+                }
+                ?>
+            </ul>
+        </div>
+
+    </div>
 </div>

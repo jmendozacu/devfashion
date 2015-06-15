@@ -923,17 +923,6 @@ jQuery(document).ready(function () {
        controlNav: "thumbnails"
    });
 
-    jQuery('.flexSlider2').flexslider({
-        animation: 'slide',
-        smoothHeight: true,
-        slideshow: false,
-        touch: true,
-        directionNav:true,
-        keyboard: false,
-        controlsContainer: '#forControlArrows2',
-        controlNav: "thumbnails"
-    });
-
     jQuery('.swipeImage').on('touchstart', function() {
         jQuery(this).fadeOut(400, function() {
             jQuery(this).hide();
@@ -945,8 +934,57 @@ jQuery(document).ready(function () {
     //});
 
     jQuery('a.MagicZoomPlus').on('click', function(){
-        jQuery(stOverlay).show();
-        console.log('pikachu');
-    })
+        jQuery(".greyBackground").show();
+        jQuery('.flexSlider2.newPopUp').show();
+        jQuery('.flexSlider2').flexslider({
+            animation: 'slide',
+            smoothHeight: true,
+            slideshow: false,
+            touch: true,
+            directionNav:true,
+            keyboard: false,
+            controlsContainer: '#forControlArrows2',
+            manualControls: '.popUpSliderNavigation li'
+            //controlNav: "thumbnails"
+        });
+        jQuery('.main').css('z-index',2);
+    });
 
-})
+    jQuery('.greyBackground').on('click', function(){
+        console.log('reikia pasalinti pilka fona');
+        jQuery('.greyBackground').hide();
+        //jQuery('.flexSlider2.newPopUp').hide();
+        jQuery('.main').css('z-index',1);
+    });
+
+    //show more images in pop up
+
+    jQuery('#openPopUpStrip a').on('click', function(){
+        showPopUpStrip();
+        return false;
+    });
+
+    function showPopUpStrip(){
+        var openPopUpStrip = jQuery('#openPopUpStrip a');
+        var $stripForThumbs = jQuery('.popUpSliderNavigation ul');
+        $stripForThumbs.animate({height: 128});
+        openPopUpStrip.hide();
+
+        console.log('More images');
+    };
+
+    //hide images in pop up
+    jQuery('#closePopUpStrip a').on('click', function(){
+        hidePopUpStrip();
+        return false;
+    });
+
+    function hidePopUpStrip(){
+        var $openPopUpStrip = jQuery('#openPopUpStrip a');
+        var $stripForThumbs = jQuery('.popUpSliderNavigation ul');
+        $openPopUpStrip.show();
+        $stripForThumbs.animate({height: 0});
+        console.log('hide images');
+    };
+
+});
