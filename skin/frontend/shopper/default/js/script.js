@@ -948,13 +948,17 @@ jQuery(document).ready(function () {
             //controlNav: "thumbnails"
         });
         jQuery('.main').css('z-index',2);
+        jQuery('.top-switch-bg').css('z-index',1);
+        jQuery('#toTop').css('z-index',1);
     });
 
     jQuery('.greyBackground').on('click', function(){
         console.log('reikia pasalinti pilka fona');
         jQuery('.greyBackground').hide();
-        //jQuery('.flexSlider2.newPopUp').hide();
+        jQuery('.flexSlider2.newPopUp').hide();
         jQuery('.main').css('z-index',1);
+        jQuery('.top-switch-bg').css('z-index',1010);
+        jQuery('#toTop').css('z-index',100);
     });
 
     //show more images in pop up
@@ -967,10 +971,13 @@ jQuery(document).ready(function () {
     function showPopUpStrip(){
         var openPopUpStrip = jQuery('#openPopUpStrip a');
         var $stripForThumbs = jQuery('.popUpSliderNavigation ul');
-        $stripForThumbs.animate({height: 128});
+        var $closeButton = jQuery('#closePopUpStrip');
+        $stripForThumbs.animate({height: 128},400,'swing',function(){
+            $closeButton.show();
+        });
         openPopUpStrip.hide();
 
-        console.log('More images');
+        //console.log('More images');
     };
 
     //hide images in pop up
@@ -982,9 +989,28 @@ jQuery(document).ready(function () {
     function hidePopUpStrip(){
         var $openPopUpStrip = jQuery('#openPopUpStrip a');
         var $stripForThumbs = jQuery('.popUpSliderNavigation ul');
+        var $closeButton = jQuery('#closePopUpStrip');
+        $closeButton.hide();
         $openPopUpStrip.show();
         $stripForThumbs.animate({height: 0});
-        console.log('hide images');
+        //console.log('hide images');
     };
+
+    jQuery(document).mousemove(function (e) {
+        var mouseX = e.pageX;
+        var mouseY = e.pageY - jQuery(window).scrollTop();
+
+        var windowWidht = jQuery(window).width();
+        var windowHeight = jQuery(window).height();
+
+        var backgroundPosition = (mouseX/windowWidht)*100 +'% ' + (mouseY/windowHeight)*100 + '%';
+
+        //console.log('x: ' + mouseX + ' - y: ' + mouseY);
+        //console.log(' window x: ' + windowWidht + ' - y: ' + windowHeight);
+        //console.log(backgroundPosition);
+
+        jQuery('.flexSlider2.newPopUp .flex-active-slide').css('background-position', backgroundPosition);
+
+    });
 
 });
