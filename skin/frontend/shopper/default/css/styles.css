@@ -2861,6 +2861,7 @@ div#forControlArrows .flex-prev{
     top: 10%;
     left: 10%;
     z-index: 10002;
+    overflow: hidden;
 }
 
 .flexSlider2.newPopUp img{
@@ -2909,6 +2910,10 @@ div#forControlArrows .flex-prev{
     z-index: 999999;
     background-size: 150%;
     background-position: center;
+}
+
+.flexSlider2.newPopUp .slides li{
+    background-size: 150%;
 }
 
 #closePopUpStrip {
