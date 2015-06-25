@@ -29,6 +29,16 @@ if ( !is_numeric($num_upsell) || $num_upsell < 1 ) $num_upsell = 4;
 $helper = $this->helper('shoppersettings/image');
 $imgX = 226;
 $imgY = $helper->calculateHeight($imgX);
+
+$mainColors = array();
+foreach ($this->getProduct()->getTypeInstance(true)->getConfigurableAttributesAsArray($this->getProduct()) as $atribute){
+    if ($atribute['attribute_code'] == 'color'){
+        foreach ($atribute['values'] as $color){
+            $mainColors [] = $color['label'];
+        }
+    }
+}
+//var_dump($mainColors);
 ?>
 <?php if(count($this->getItemCollection()->getItems())): ?>
 <div class="box-collateral box-up-sell">
@@ -38,11 +48,32 @@ $imgY = $helper->calculateHeight($imgX);
     <ul id="upsell-products-list" class="jcarousel-skin-tango small-list">
     <?php $this->resetItemsIterator(); $i=0; while ($_item=$this->getIterableItem()) : ?>
 
+        <?php
+
+        $secondaryColor= array();
+        $classes = '';
+
+        foreach ($_item->getTypeInstance(true)->getConfigurableAttributesAsArray($_item) as $atribute){
+            if ($atribute['attribute_code'] == 'color'){
+                foreach ($atribute['values'] as $color){
+                    if(in_array($color['label'], $mainColors)){
+                        $secondaryColor[] = $color['label'];
+                        $classes .= ' '.$color['label'];
+                    }
+                }
+            }
+        }
+//        var_dump($secondaryColor);
+
+        if (empty($secondaryColor) || count($secondaryColor)==count($mainColors)){
+            $classes .= ' allColors';
+        }
+        ?>
         <?php if ( $i==0 ) :?>
             <li><ul>
         <?php endif; ?>
 
-        <li class="item">
+        <li class="item <?php echo $classes ?>">
             <a class="product-image" href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>">
 	            <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize($imgX, $imgY); ?>" data-srcX2="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize($imgX*2, $imgY*2); ?>" width="<?php echo $imgX; ?>" height="<?php echo $imgY; ?>" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" />
             </a>

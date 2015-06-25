@@ -1013,4 +1013,22 @@ jQuery(document).ready(function () {
 
     });
 
-});
+
+
+    //hide asiosiated products, and show only needed
+
+    jQuery('.box-up-sell li.item').hide();
+    jQuery('.box-up-sell li.allColors').show();
+    jQuery(window).load(function(){
+        var selectedColor = jQuery('.product-swatches-container .selected').attr('title');
+        //console.log(selectedColor);
+        jQuery('.box-up-sell li.' + selectedColor).show();
+    })
+    jQuery('.product-swatches-container a').on('click', function(){
+        var selectedColor = jQuery(this).attr('title');
+        //console.log(selectedColor);
+        jQuery('.box-up-sell li.item').hide();
+        jQuery('.box-up-sell li.allColors').show();
+        jQuery('.box-up-sell li.' + selectedColor).show();
+    })
+}) ;
