@@ -911,17 +911,38 @@ function getTweets(el, utils){
     }
 }
 
+function makeSlider(id){
+    jQuery('#' + id).flexslider({
+        animation: 'slide',
+        smoothHeight: true,
+        slideshow: false,
+        touch: true,
+        directionNav:true,
+        keyboard: false,
+        controlsContainer: '#' + id + ' .forControlArrows',
+        controlNav: "thumbnails"
+    });
+}
+
+
+
 jQuery(document).ready(function () {
-   jQuery('.flexSlider').flexslider({
-       animation: 'slide',
-       smoothHeight: true,
-       slideshow: false,
-       touch: true,
-       directionNav:true,
-       keyboard: false,
-       controlsContainer: '#forControlArrows',
-       controlNav: "thumbnails"
-   });
+
+   //jQuery('.flexSlider').flexslider({
+   //    animation: 'slide',
+   //    smoothHeight: true,
+   //    slideshow: false,
+   //    touch: true,
+   //    directionNav:true,
+   //    keyboard: false,
+   //    controlsContainer: '#forControlArrows',
+   //    controlNav: "thumbnails"
+   //});
+
+    jQuery('.flexSlider.newOne').each(function (key, value){
+        makeSlider(value.id);
+        value.hide();
+    })
 
     jQuery('.swipeImage').on('touchstart', function() {
         jQuery(this).fadeOut(400, function() {
@@ -1021,14 +1042,19 @@ jQuery(document).ready(function () {
     jQuery('.box-up-sell li.allColors').show();
     jQuery(window).load(function(){
         var selectedColor = jQuery('.product-swatches-container .selected').attr('title');
-        //console.log(selectedColor);
+        var selectedId = jQuery('.product-swatches-container .selected').attr('id');
+        console.log(selectedId);
         jQuery('.box-up-sell li.' + selectedColor).show();
+        jQuery('#'+selectedId+'.flexSlider.newOne').show();
     })
     jQuery('.product-swatches-container a').on('click', function(){
         var selectedColor = jQuery(this).attr('title');
+        var selectedId = jQuery(this).attr('id');
         //console.log(selectedColor);
         jQuery('.box-up-sell li.item').hide();
         jQuery('.box-up-sell li.allColors').show();
         jQuery('.box-up-sell li.' + selectedColor).show();
+        jQuery('.flexSlider.newOne').hide();
+        jQuery('#'+selectedId+'.flexSlider.newOne').show();//needs make slider function
     })
 }) ;

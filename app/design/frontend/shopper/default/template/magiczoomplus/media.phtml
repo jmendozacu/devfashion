@@ -48,28 +48,65 @@ if($main_image_file && $main_image_file != 'no_selection') {
 
     $main = $tool->getMainTemplate(compact('id', 'alt', 'label', 'title', 'description', 'shortDescription', 'img', 'thumb'));
     $g_images = '';
-    $extra = '
-<div class="flexSlider newOne">
-<div id="forControlArrows"></div>
-<ul class="slides">';
+
+    $galeries = array();
     foreach($this->getGalleryImages() as $g_image){
         $g_image_path  = $g_image->getPath();
         if(!file_exists($g_image_path)) continue;
-        /**
-         * @ToDo
-         *
-         * change rel data from hardcoded to normal one
-         */
-        $extra .='
-            <li data-thumb="'.$g_image->url .'">
-                <a class="MagicZoomPlus" href="'.$g_image->url .'" rel="zoom-width:100;zoom-height:100;expand-effect:linear;expand-speed:300;expand-trigger-delay:0;pan-zoom:false;show-title:false;right-click:true;buttons-position:bottom left;slideshow-effect:expand;disable-zoom:true;">
-                    <img src="'.$g_image->url.'">
+        $galeries[$g_image->getLabel()]['images'][]['url']=$g_image->url;
+        if( $g_image->associated_attributes != ''){
+            $idForSlider = explode('-',$g_image->associated_attributes);
+            $idForSlider = $idForSlider[1];
+            $idForSlider = 'swatches_option_value_'.$idForSlider;
+            $galeries[$g_image->getLabel()]['idForSlider']=$idForSlider;
+        }
+    }
+
+    $extra = '';
+    foreach ($galeries as $galery){
+        $extra .='<div class="flexSlider newOne" id="'.$galery['idForSlider'].'">
+<div id="forControlArrows"></div>
+<ul class="slides">
+        ';
+        foreach($galery['images'] as $_ged_image){
+            $extra .='
+            <li data-thumb="'.$_ged_image['url'] .'">
+                <a class="MagicZoomPlus" href="'.$_ged_image['url'] .'" rel="zoom-width:100;zoom-height:100;expand-effect:linear;expand-speed:300;expand-trigger-delay:0;pan-zoom:false;show-title:false;right-click:true;buttons-position:bottom left;slideshow-effect:expand;disable-zoom:true;">
+                    <img src="'.$_ged_image['url'].'">
                 </a>
             </li>
         ';
-    }
-    $extra .='</ul>
+        }
+        $extra .='</ul>
     </div>';
+
+    }
+
+
+//    $extra = '
+//<div class="flexSlider newOne">
+//<div id="forControlArrows"></div>
+//<ul class="slides">';
+//    foreach($this->getGalleryImages() as $g_image){
+////        var_dump($g_image);die();
+////        var_dump($g_image->getLabel());
+//        $g_image_path  = $g_image->getPath();
+//        if(!file_exists($g_image_path)) continue;
+//        /**
+//         * @ToDo
+//         *
+//         * change rel data from hardcoded to normal one
+//         */
+//        $extra .='
+//            <li data-thumb="'.$g_image->url .'">
+//                <a class="MagicZoomPlus" href="'.$g_image->url .'" rel="zoom-width:100;zoom-height:100;expand-effect:linear;expand-speed:300;expand-trigger-delay:0;pan-zoom:false;show-title:false;right-click:true;buttons-position:bottom left;slideshow-effect:expand;disable-zoom:true;">
+//                    <img src="'.$g_image->url.'">
+//                </a>
+//            </li>
+//        ';
+//    }
+//    $extra .='</ul>
+//    </div>';
     $main = $extra;
 
 } else {
