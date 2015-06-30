@@ -913,8 +913,8 @@ function getTweets(el, utils){
 
 
 // create big slider with needed options
-function makebigSlider(id){
-    console.log('#' + id);
+function makebigSlider(id, index){
+    //console.log('#' + id);
     jQuery('#' + id).flexslider({
         animation: 'slide',
         smoothHeight: true,
@@ -923,7 +923,8 @@ function makebigSlider(id){
         directionNav:true,
         keyboard: true,
         controlsContainer: '#' + id + ' .forControlArrows2',
-        manualControls:  '#' + id + ' .popUpSliderNavigation li'
+        manualControls:  '#' + id + ' .popUpSliderNavigation li',
+        startAt: index
         //controlNav: "thumbnails"
     });
 }
@@ -941,7 +942,7 @@ function makeSlider(id){
         controlsContainer: '#' + id + ' .forControlArrows',
         controlNav: "thumbnails"
     });
-    console.log('inisiated slider');
+    //console.log('inisiated slider');
 }
 
 jQuery(document).ready(function () {
@@ -974,12 +975,14 @@ jQuery(document).ready(function () {
 
     jQuery('a.MagicZoomPlus').on('click', function(){
         var id = jQuery(this).parent().parent().parent().parent().attr('id');
+        var slideIndex =jQuery(this).parent().index();
+        slideIndex = slideIndex - 1;
         id = 'big-' +  id;
-        console.log(id);
+        //console.log(slideIndex);
         jQuery(".greyBackground").show();
         jQuery('#' + id).show();
         //jQuery('.flexSlider2').flexslider({
-        //    animation: 'slide',
+        //    animation: 'slide', '#' + id
         //    smoothHeight: true,
         //    slideshow: false,
         //    touch: true,
@@ -989,7 +992,8 @@ jQuery(document).ready(function () {
         //    manualControls: '.popUpSliderNavigation li'
         //    //controlNav: "thumbnails"
         //});
-        makebigSlider(id);
+        makebigSlider(id, slideIndex);
+        jQuery('#' + id).data('flexslider').flexAnimate(slideIndex);
         jQuery('.main').css('z-index',2);
         jQuery('.top-switch-bg').css('z-index',1);
         jQuery('#toTop').css('z-index',1);
@@ -1065,7 +1069,7 @@ jQuery(document).ready(function () {
     jQuery(window).load(function(){
         var selectedColor = jQuery('.product-swatches-container .selected').attr('title');
         var selectedId = jQuery('.product-swatches-container .selected').attr('id');
-        console.log(selectedId);
+        //console.log(selectedId);
         jQuery('.box-up-sell li.' + selectedColor).show();
         jQuery('#'+selectedId+'.flexSlider.newOne').show();
     })
