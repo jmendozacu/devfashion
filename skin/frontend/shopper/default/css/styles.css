@@ -2785,7 +2785,7 @@ width:100%;
 .flexSlider.newOne {
     border: 1px solid #aaaaaa;
     position: relative;
-    margin-bottom: 100px;
+    margin-bottom: 150px;
 }
 
 div#forControlArrows {
@@ -2797,13 +2797,14 @@ div#forControlArrows {
 .flexSlider.newOne .flex-control-thumbs {
     overflow: hidden;
     position: absolute;
-    bottom: -100px;
+    bottom: -150px;
 }
 
 .flexSlider.newOne .flex-control-thumbs li{
     float: none;
     margin: 0 3px;
-    height: 73px;
+    /*height: 73px;*/
+    width: 23%;
 }
 
 .flexSlider.newOne .flex-control-thumbs li img{

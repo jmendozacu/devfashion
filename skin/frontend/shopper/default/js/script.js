@@ -922,6 +922,7 @@ function makeSlider(id){
         controlsContainer: '#' + id + ' .forControlArrows',
         controlNav: "thumbnails"
     });
+    console.log('inisiated slider');
 }
 
 
@@ -1055,6 +1056,7 @@ jQuery(document).ready(function () {
         jQuery('.box-up-sell li.allColors').show();
         jQuery('.box-up-sell li.' + selectedColor).show();
         jQuery('.flexSlider.newOne').hide();
-        jQuery('#'+selectedId+'.flexSlider.newOne').show();//needs make slider function
+        jQuery('#'+selectedId+'.flexSlider.newOne').show();
+        jQuery(window).trigger('resize')
     })
 }) ;
