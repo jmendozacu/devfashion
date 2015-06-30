@@ -468,45 +468,66 @@
 <div class="greyBackground">
 </div>
 
-<div class="flexSlider2 newPopUp">
-    <div id="forControlArrows2"></div>
-    <ul class="slides">
-        <?php
+<?php
 
-        $product_id = $this->getProduct()->getId();
+$product_id = $this->getProduct()->getId();
 
-        $product = Mage::getModel('catalog/product')->load($product_id);//product id here
+$product = Mage::getModel('catalog/product')->load($product_id);//product id here
 
-        $imagesForSlider = $product->getMediaGalleryImages();
+$galeries = array();
+//$galeries = $product->getMediaGalleryImages();
 
-        foreach ($imagesForSlider as $image) {
-            /**
-             * @ToDo
-             *
-             * change rel data from hardcoded to normal one
-             */
-            if(!file_exists($image->getPath())) continue;
-            ?>
-            <li style="background-image: url(<?php echo $image->getUrl() ?>)">
-                <img src="<?php echo $image->getUrl()?>">
-            </li>
-        <?php } ?>
-    </ul>
-    <div class="popUpSliderNavigation">
-        <div id="openPopUpStrip"><a href="#">MORE IMAGES</a></div>
-        <div id="closePopUpStrip"><a href="#">x</a></div>
-        <ul>
+foreach($product->getMediaGalleryImages() as $g_image){
+    $g_image_path  = $g_image->getPath();
+    if(!file_exists($g_image_path)) continue;
+    $galeries[$g_image->getLabel()]['images'][]['url']=$g_image->url;
+    if( $g_image->associated_attributes != ''){
+        $idForSlider = explode('-',$g_image->associated_attributes);
+        $idForSlider = $idForSlider[1];
+        $idForSlider = 'swatches_option_value_'.$idForSlider;
+        $galeries[$g_image->getLabel()]['idForSlider']=$idForSlider;
+    }
+}
+var_dump($galeries[1]);
+
+foreach ($galeries as $galery){
+    ?>
+
+    <div class="flexSlider2 newPopUp" id="big-<?php echo $galery['idForSlider']?>">
+        <div class="forControlArrows2"></div>
+        <ul class="slides">
             <?php
-            foreach ($imagesForSlider as $image) {
-                if(!file_exists($image->getPath())) continue;
+
+            foreach ($galery['images'] as $image) {
+                /**
+                 * @ToDo
+                 *
+                 * change rel data from hardcoded to normal one
+                 */
                 ?>
-                <li>
-                    <div class="imageContainer" style="background-image: url(<?php echo $image->getUrl() ?>)"></div>
+                <li style="background-image: url(<?php echo $image['url'] ?>)">
+                    <img src="<?php echo $image['url'] ?>">
                 </li>
-            <?php
-            }
-            ?>
+            <?php } ?>
         </ul>
+        <div class="popUpSliderNavigation" id="navigation-<?php echo $galery['idForSlider'] ?>">
+            <div id="openPopUpStrip"><a href="#">MORE IMAGES</a></div>
+            <div id="closePopUpStrip"><a href="#">x</a></div>
+            <ul>
+                <?php
+                foreach ($galery['images'] as $image) {
+                    ?>
+                    <li>
+                        <div class="imageContainer" style="background-image: url(<?php echo $image['url'] ?>)"></div>
+                    </li>
+                <?php
+                }
+                ?>
+            </ul>
+        </div>
+
     </div>
 
-</div>
+<?php
+}
+?>

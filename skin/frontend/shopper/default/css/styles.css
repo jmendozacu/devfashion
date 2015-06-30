@@ -2863,6 +2863,7 @@ div#forControlArrows .flex-prev{
     left: 10%;
     z-index: 10002;
     overflow: hidden;
+    display: hidden;
 }
 
 .flexSlider2.newPopUp img{

@@ -911,6 +911,25 @@ function getTweets(el, utils){
     }
 }
 
+
+// create big slider with needed options
+function makebigSlider(id){
+    console.log('#' + id);
+    jQuery('#' + id).flexslider({
+        animation: 'slide',
+        smoothHeight: true,
+        slideshow: false,
+        touch: true,
+        directionNav:true,
+        keyboard: true,
+        controlsContainer: '#' + id + ' .forControlArrows2',
+        manualControls:  '#' + id + ' .popUpSliderNavigation li'
+        //controlNav: "thumbnails"
+    });
+}
+
+// small sliders creation with needed options
+
 function makeSlider(id){
     jQuery('#' + id).flexslider({
         animation: 'slide',
@@ -924,8 +943,6 @@ function makeSlider(id){
     });
     console.log('inisiated slider');
 }
-
-
 
 jQuery(document).ready(function () {
 
@@ -956,26 +973,30 @@ jQuery(document).ready(function () {
     //});
 
     jQuery('a.MagicZoomPlus').on('click', function(){
+        var id = jQuery(this).parent().parent().parent().parent().attr('id');
+        id = 'big-' +  id;
+        console.log(id);
         jQuery(".greyBackground").show();
-        jQuery('.flexSlider2.newPopUp').show();
-        jQuery('.flexSlider2').flexslider({
-            animation: 'slide',
-            smoothHeight: true,
-            slideshow: false,
-            touch: true,
-            directionNav:true,
-            keyboard: false,
-            controlsContainer: '#forControlArrows2',
-            manualControls: '.popUpSliderNavigation li'
-            //controlNav: "thumbnails"
-        });
+        jQuery('#' + id).show();
+        //jQuery('.flexSlider2').flexslider({
+        //    animation: 'slide',
+        //    smoothHeight: true,
+        //    slideshow: false,
+        //    touch: true,
+        //    directionNav:true,
+        //    keyboard: false,
+        //    controlsContainer: '#forControlArrows2',
+        //    manualControls: '.popUpSliderNavigation li'
+        //    //controlNav: "thumbnails"
+        //});
+        makebigSlider(id);
         jQuery('.main').css('z-index',2);
         jQuery('.top-switch-bg').css('z-index',1);
         jQuery('#toTop').css('z-index',1);
     });
 
     jQuery('.greyBackground').on('click', function(){
-        console.log('reikia pasalinti pilka fona');
+        //console.log('reikia pasalinti pilka fona');
         jQuery('.greyBackground').hide();
         jQuery('.flexSlider2.newPopUp').hide();
         jQuery('.main').css('z-index',1);
@@ -1037,7 +1058,7 @@ jQuery(document).ready(function () {
 
 
 
-    //hide asiosiated products, and show only needed
+    //hide asiosiated products and needed sliders, and show only needed
 
     jQuery('.box-up-sell li.item').hide();
     jQuery('.box-up-sell li.allColors').show();
