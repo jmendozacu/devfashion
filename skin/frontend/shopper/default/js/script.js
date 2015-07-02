@@ -1043,6 +1043,15 @@ jQuery(document).ready(function () {
         //console.log('hide images');
     };
 
+    function goToNeededUpsellSlide(label_id){
+        var slideIndex = jQuery('#label-' + label_id).index() - 1;
+        var slider  = jQuery('.box-collateral.box-up-sell').data('flexslider');
+        console.log(slider);
+        if (typeof slider != "undefined"){
+            slider.flexAnimate(slideIndex);
+        }
+    }
+
     jQuery(document).mousemove(function (e) {
         var mouseX = e.pageX;
         var mouseY = e.pageY - jQuery(window).scrollTop();
@@ -1062,26 +1071,43 @@ jQuery(document).ready(function () {
 
 
 
-    //hide asiosiated products and needed sliders, and show only needed
+    //hide asiosiated products and sliders, and show only needed
 
-    jQuery('.box-up-sell li.item').hide();
-    jQuery('.box-up-sell li.allColors').show();
+    //jQuery('.box-up-sell li.item').hide();
+    //jQuery('.box-up-sell li.allColors').show();
     jQuery(window).load(function(){
-        var selectedColor = jQuery('.product-swatches-container .selected').attr('title');
+        var label_id = jQuery('.product-swatches-container .selected').attr('data-label');
         var selectedId = jQuery('.product-swatches-container .selected').attr('id');
         //console.log(selectedId);
-        jQuery('.box-up-sell li.' + selectedColor).show();
         jQuery('#'+selectedId+'.flexSlider.newOne').show();
+        goToNeededUpsellSlide(label_id);
     })
     jQuery('.product-swatches-container a').on('click', function(){
-        var selectedColor = jQuery(this).attr('title');
+        var label_id = jQuery(this).attr('data-label');
         var selectedId = jQuery(this).attr('id');
-        //console.log(selectedColor);
-        jQuery('.box-up-sell li.item').hide();
-        jQuery('.box-up-sell li.allColors').show();
-        jQuery('.box-up-sell li.' + selectedColor).show();
+        //console.log(selectedId);
         jQuery('.flexSlider.newOne').hide();
         jQuery('#'+selectedId+'.flexSlider.newOne').show();
-        jQuery(window).trigger('resize')
+        jQuery(window).trigger('resize');
+        goToNeededUpsellSlide(label_id);
+        //jQuery(window).scrollTop(0);
+        var body = jQuery("html, body");
+        body.stop().animate({scrollTop:0}, '500');
+        //jQuery(window).stop().animate({scrollTop:0}, '500', 'swing', function() {
+        //    alert("Finished animating");
+        //});
     })
+
+
+    //Up-sell carusel
+
+    jQuery('.box-collateral.box-up-sell').flexslider({
+        animation: 'slide',
+        smoothHeight: true,
+        slideshow: false,
+        touch: false,
+        directionNav:false,
+        keyboard: false,
+        controlNav: false
+    });
 }) ;

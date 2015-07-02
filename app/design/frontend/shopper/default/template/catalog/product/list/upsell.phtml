@@ -30,50 +30,46 @@ $helper = $this->helper('shoppersettings/image');
 $imgX = 226;
 $imgY = $helper->calculateHeight($imgX);
 
-$mainColors = array();
-foreach ($this->getProduct()->getTypeInstance(true)->getConfigurableAttributesAsArray($this->getProduct()) as $atribute){
-    if ($atribute['attribute_code'] == 'color'){
-        foreach ($atribute['values'] as $color){
-            $mainColors [] = $color['label'];
+////var_dump($this->getProduct());
+//$mainColors = array();
+//foreach ($this->getProduct()->getTypeInstance(true)->getConfigurableAttributesAsArray($this->getProduct()) as $atribute){
+//    if ($atribute['attribute_code'] == 'color'){
+//        foreach ($atribute['values'] as $color){
+//            $mainColors [] = $color['label'];
+//        }
+//    }
+//}
+////var_dump($mainColors);
+
+$productsInSwatches = array();
+
+$this->resetItemsIterator(); $i=0; while ($_item=$this->getIterableItem()) {
+    $swatch = $_item->getSwatch1();
+    if ($swatch && $swatch != ''){
+        $swatch = explode(',',$swatch);
+        foreach ($swatch as $value){
+            $productsInSwatches[$value] [] = $_item;
         }
+    } else {
+        $productsInSwatches [0] [] = $_item;
     }
 }
-//var_dump($mainColors);
+//var_dump(array_keys($productsInSwatches));
 ?>
 <?php if(count($this->getItemCollection()->getItems())): ?>
 <div class="box-collateral box-up-sell">
     <div id="look_title"><h3><?php echo $this->__('Complete the look') ?></h3></div>
 	<?php /* <p class="block-subtitle"><?php echo $this->__('Check items to add to the cart or') ?>&nbsp;<a href="#" onclick="selectAllUpsell(this); return false;"><?php echo $this->__('select all') ?></a></p> */ ?>
     <div class="clearer"></div>
-    <ul id="upsell-products-list" class="jcarousel-skin-tango small-list">
-    <?php $this->resetItemsIterator(); $i=0; while ($_item=$this->getIterableItem()) : ?>
+    <ul id="upsell-products-list" class="jcarousel-skin-tango small-list slides">
+        <?php foreach($productsInSwatches as $key => $productArray) {?>
+<!--        --><?php //if ( $i==0 ) :?>
+            <li id="label-<?php echo $key?>"><ul>
+<!--        --><?php //endif; ?>
+            <?php foreach($productArray as $_item){ ?>
+<!--                --><?php //var_dump($_item)?>
 
-        <?php
-
-        $secondaryColor= array();
-        $classes = '';
-
-        foreach ($_item->getTypeInstance(true)->getConfigurableAttributesAsArray($_item) as $atribute){
-            if ($atribute['attribute_code'] == 'color'){
-                foreach ($atribute['values'] as $color){
-                    if(in_array($color['label'], $mainColors)){
-                        $secondaryColor[] = $color['label'];
-                        $classes .= ' '.$color['label'];
-                    }
-                }
-            }
-        }
-//        var_dump($secondaryColor);
-
-        if (empty($secondaryColor) || count($secondaryColor)==count($mainColors)){
-            $classes .= ' allColors';
-        }
-        ?>
-        <?php if ( $i==0 ) :?>
-            <li><ul>
-        <?php endif; ?>
-
-        <li class="item <?php echo $classes ?>">
+        <li class="item">
             <a class="product-image" href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>">
 	            <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize($imgX, $imgY); ?>" data-srcX2="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize($imgX*2, $imgY*2); ?>" width="<?php echo $imgX; ?>" height="<?php echo $imgY; ?>" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" />
             </a>
@@ -86,17 +82,19 @@ foreach ($this->getProduct()->getTypeInstance(true)->getConfigurableAttributesAs
             <?php echo $this->getPriceHtml($_item, true, '-upsell') ?>
             <div class="clear"></div>
         </li>
+            <?php } ?>
 
-        <?php $i++;  ?>
-        <?php if ( $i==$num_upsell ) : $i=0; ?>
-            </ul></li>
-        <?php endif; ?>
+<!--        --><?php //$i++;  ?>
+<!--        --><?php //if ( $i==$num_upsell ) : $i=0; ?>
+<!--            </ul></li>-->
+<!--        --><?php //endif; ?>
 
-    <?php endwhile; ?>
+                </ul></li>
 
-    <?php if ( $i> 0 ) : ?>
-        </ul></li>
-    <?php endif; ?>
+    <?php } ?>
+
+<!--    --><?php //if ( $i> 0 ) : ?>
+<!--    --><?php //endif; ?>
 
     </ul>
     <div class="clear"></div>

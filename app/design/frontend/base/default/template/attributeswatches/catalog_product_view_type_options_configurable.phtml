@@ -7,6 +7,13 @@ include_once 'attributeSwatches.php';
 //$_d = $this->getJsonConfig();
 $_json_config = addAttributeSwatches($this->getJsonConfig());
 $_product = $this->getProduct();
+
+$labelsOptionsArray = array();
+foreach ($_product->_data['media_gallery']['images'] as  $_vip1_image){
+    if ($_vip1_image['associated_attributes'] && $_vip1_image['associated_attributes'] != ''){
+        $labelsOptionsArray [$_vip1_image['associated_attributes']] = $_vip1_image['label'];
+    }
+}
 ?>
 <?php if ($_product->isSaleable() && count($_json_config["attributes"])): ?>
     <dl id="options-container-<?php echo $_product->getId(); ?>">
@@ -49,7 +56,7 @@ $_product = $this->getProduct();
                                                 $_image = $this->helper('catalog/image')->init($_image_product, 'image');
                                             }
                                             ?>
-                                            <a class="" title="<?php echo $_option["label"] ?>" data-original-title="<?php echo $_option["label"] ?>"  rel="<?php echo $_option["id"] ?>" id="swatches_option_value_<?php echo $_option["id"] ?>" href="<?php echo $_image; ?>" rev="<?php echo $_image->resize(256); ?>">
+                                            <a class="" data-label="<?php echo $labelsOptionsArray['attribute'.$_attribute['id'].'-'.$_option["id"]]?>" title="<?php echo $_option["label"] ?>" data-original-title="<?php echo $_option["label"] ?>"  rel="<?php echo $_option["id"] ?>" id="swatches_option_value_<?php echo $_option["id"] ?>" href="<?php echo $_image; ?>" rev="<?php echo $_image->resize(256); ?>">
                                                 <?php
                                                 echo "<img src='" . $_image->resize(150) . "' title='" . $_option["label"] . "' alt='" . $_option["label"] . "'/>";
                                                 ?>

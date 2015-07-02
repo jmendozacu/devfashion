@@ -213,6 +213,16 @@ class Mage_Adminhtml_Block_Catalog_Product_Edit_Tab_Upsell extends Mage_Adminhtm
             'edit_only'         => !$this->_getProduct()->getId()
         ));
 
+        $this->addColumn('swatch1', array(
+            'header'            => Mage::helper('catalog')->__('First swatch'),
+            'name'              => 'swatch1',
+            'width'             => 130,
+            'index'             => 'swatch1',
+            'editable'          => !$this->_getProduct()->getUpsellReadonly(),
+            'edit_only'         => !$this->_getProduct()->getId(),
+            'filter'            => false
+        ));
+
         return parent::_prepareColumns();
     }
 
@@ -249,7 +259,13 @@ class Mage_Adminhtml_Block_Catalog_Product_Edit_Tab_Upsell extends Mage_Adminhtm
     {
         $products = array();
         foreach (Mage::registry('current_product')->getUpSellProducts() as $product) {
-            $products[$product->getId()] = array('position' => $product->getPosition());
+//            var_dump($product);
+//            var_dump($product);
+            $products[$product->getId()] = array(
+                'position' => $product->getPosition(),
+                'swatch1' => $product->getSwatch1()
+            );
+//            $products[$product->getId()] = array('swatch1' => 33);
         }
         return $products;
     }
